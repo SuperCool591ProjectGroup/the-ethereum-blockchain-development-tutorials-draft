@@ -1,7 +1,6 @@
 pragma solidity ^0.4.4;
 
 contract HelloEthSalon {
-  string message = "I know smart contract testing!!";
   string[] public songs;
   address[] public users;
   // assume one song only has one copyright holder for now
@@ -15,14 +14,15 @@ contract HelloEthSalon {
   }
 
   // function userRegister() returns (address[]){
-  function userRegister() returns (string){
+  function userRegister() public returns (uint){
     users.push(msg.sender);
-    return "user registered";
+    // return msg.sender;//"user registered";
+    return users.length;
     // return users;
   }
 
   function registerCopyright(string song, uint price) public returns (string) {
-    require(checkUserExists(msg.sender));
+    // require(checkUserExists(msg.sender));
     songs.push(song);
     priceInfo[song] = price;
     holderInfo[song].add = msg.sender;
@@ -39,12 +39,8 @@ contract HelloEthSalon {
     }
     return false;
   }
-  
-  function HelloEthSalon() {
-    // constructor
-  }
 
-  function GetMessage() returns (string) {
-    return message;
+  function checkUsersCount() public returns(uint) {
+    return users.length;
   }
 }
