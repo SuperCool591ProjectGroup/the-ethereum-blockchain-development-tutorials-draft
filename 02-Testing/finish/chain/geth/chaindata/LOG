@@ -1,0 +1,74 @@
+=============== Apr 10, 2018 (EDT) ===============
+16:41:58.036628 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:41:58.037215 db@open opening
+16:41:58.037694 version@stat F·[] S·0B[] Sc·[]
+16:41:58.037980 db@janitor F·2 G·0
+16:41:58.038069 db@open done T·830.767µs
+=============== Apr 10, 2018 (EDT) ===============
+16:42:02.538704 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:42:02.538883 version@stat F·[] S·0B[] Sc·[]
+16:42:02.538899 db@open opening
+16:42:02.538954 journal@recovery F·1
+16:42:02.542170 journal@recovery recovering @1
+16:42:02.542964 memdb@flush created L0@2 N·9 S·543B "H^\x1f..א\xe0,v3":"r\x00\x00..א\xe0,v5"
+16:42:02.546159 version@stat F·[1] S·543B[543B] Sc·[0.25]
+16:42:02.547268 db@janitor F·3 G·0
+16:42:02.547295 db@open done T·8.386596ms
+16:42:04.664531 db@close closing
+16:42:04.664703 db@close done T·172.392µs
+=============== Apr 10, 2018 (EDT) ===============
+16:45:45.159229 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:45:45.160391 version@stat F·[1] S·543B[543B] Sc·[0.25]
+16:45:45.160410 db@open opening
+16:45:45.160474 journal@recovery F·1
+16:45:45.167126 journal@recovery recovering @3
+16:45:45.167912 memdb@flush created L0@5 N·3 S·290B "Blo..ion,v12":"dbU..ata,v11"
+16:45:45.171457 version@stat F·[2] S·833B[833B] Sc·[0.50]
+16:45:45.172414 db@janitor F·4 G·0
+16:45:45.172447 db@open done T·12.021824ms
+16:45:47.305046 db@close closing
+16:45:47.305512 db@close done T·462.033µs
+=============== Apr 10, 2018 (EDT) ===============
+16:46:43.534364 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:46:43.535457 version@stat F·[2] S·833B[833B] Sc·[0.50]
+16:46:43.535476 db@open opening
+16:46:43.535542 journal@recovery F·1
+16:46:43.541430 journal@recovery recovering @6
+16:46:43.542352 memdb@flush created L0@8 N·2 S·243B "Blo..ion,v15":"Las..der,v16"
+16:46:43.545674 version@stat F·[3] S·1KiB[1KiB] Sc·[0.75]
+16:46:43.546667 db@janitor F·5 G·0
+16:46:43.546704 db@open done T·11.211223ms
+16:46:45.679609 db@close closing
+16:46:45.679857 db@close done T·255.829µs
+=============== Apr 10, 2018 (EDT) ===============
+16:48:29.891501 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:48:29.892386 version@stat F·[3] S·1KiB[1KiB] Sc·[0.75]
+16:48:29.892408 db@open opening
+16:48:29.892488 journal@recovery F·1
+16:48:29.895665 journal@recovery recovering @9
+16:48:29.896888 memdb@flush created L0@11 N·2 S·243B "Blo..ion,v18":"Las..der,v19"
+16:48:29.900088 version@stat F·[4] S·1KiB[1KiB] Sc·[1.00]
+16:48:29.901458 db@janitor F·6 G·0
+16:48:29.901485 db@open done T·9.066519ms
+16:48:29.901546 table@compaction L0·4 -> L1·0 S·1KiB Q·20
+16:48:29.902463 table@build created L1@14 N·11 S·608B "Blo..ion,v18":"r\x00\x00..א\xe0,v5"
+16:48:29.902506 version@stat F·[0 1] S·608B[0B 608B] Sc·[0.00 0.00]
+16:48:29.902644 table@compaction committed F-3 S-711B Ke·0 D·5 T·1.065113ms
+16:48:29.902730 table@remove removed @11
+16:48:29.902824 table@remove removed @8
+16:48:29.903172 table@remove removed @5
+16:48:29.903271 table@remove removed @2
+16:48:32.023143 db@close closing
+16:48:32.023296 db@close done T·153.486µs
+=============== Apr 10, 2018 (EDT) ===============
+16:56:43.402018 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:56:43.403065 version@stat F·[0 1] S·608B[0B 608B] Sc·[0.00 0.00]
+16:56:43.403084 db@open opening
+16:56:43.403154 journal@recovery F·1
+16:56:43.409669 journal@recovery recovering @12
+16:56:43.410639 memdb@flush created L0@15 N·2 S·243B "Blo..ion,v21":"Las..der,v22"
+16:56:43.414351 version@stat F·[1 1] S·851B[243B 608B] Sc·[0.25 0.00]
+16:56:43.415337 db@janitor F·4 G·0
+16:56:43.415370 db@open done T·12.276352ms
+16:56:45.555298 db@close closing
+16:56:45.555490 db@close done T·192.758µs
