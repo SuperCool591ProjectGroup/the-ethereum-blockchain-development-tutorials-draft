@@ -55,4 +55,9 @@ contract Copyright {
   function payRoyalty(string song, uint amount) {
   	holderInfo[song].add.transfer(amount);
   }
+
+  function getMyBalance() public constant returns (uint) {
+  	return msg.sender.balance;
+  }
+
 }

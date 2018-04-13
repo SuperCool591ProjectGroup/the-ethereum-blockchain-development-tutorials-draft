@@ -17,6 +17,22 @@ contract("Payment", function (accounts) {
 		await c.registerCopyright(song, 1000, {from: seller});
 		console.log("upload a song")
 
-		await c.buyLicense(song, {from: buyer, gas: 9999999999});
+		let prevBuyerBalance = await c.getMyBalance.call({from: buyer});
+		console.log("Buyer's previous balance: " + prevBuyerBalance);
+		let prevBalance = await c.getMyBalance.call({from: seller});
+		console.log("Seller's previous balance: " + prevBalance);
+
+		await c.buyLicense(song, {from: buyer, value: 1001});
+
+		let newBuyerBalance = await c.getMyBalance.call({from: buyer});
+		console.log("Buyer's new balance?: " + newBuyerBalance);
+		let newBalance = await c.getMyBalance.call({from: seller});
+		console.log("Seller's new balance?: " + newBalance);
+		
+
+		let difference = newBalance.toNumber() - prevBalance.toNumber();
+		console.log("Difference: " + difference);
+
+		assert.isTrue(true);
 	});
 });
