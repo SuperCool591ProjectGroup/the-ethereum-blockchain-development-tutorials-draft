@@ -21,15 +21,12 @@ contract HelloEthSalon {
     return users.length;
   }
 
-  function registerCopyright(string song, uint price) public returns (string) {
+  function registerCopyright(string song, uint price) public {
     require(checkUserExists(msg.sender));
     songs.push(song);
     priceInfo[song] = price;
     holderInfo[song].add = msg.sender;
     holderInfo[song].share = 1;
-    // authorization[song] = address[];
-    // return holderInfo[song].add;
-    return "copyright registered";
   }
 
   function checkUserExists(address user) public constant returns(bool) {
@@ -38,5 +35,9 @@ contract HelloEthSalon {
         return true;
     }
     return false;
+  }
+
+  function checkSongPrice(string song) public constant returns(uint) {
+    return priceInfo[song];
   }
 }
