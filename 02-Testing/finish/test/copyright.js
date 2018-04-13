@@ -1,8 +1,8 @@
-var HelloEthSalon = artifacts.require("./HelloEthSalon.sol");
+var Copyright = artifacts.require("./Copyright.sol");
 
-contract("HelloEthSalon:GetMessage", function (accounts) {
+contract("Copyright!", function (accounts) {
   it("should return one right after you register", async function() {
-    let c = await HelloEthSalon.deployed();
+    let c = await Copyright.deployed();
     await c.userRegister();
     let count = await c.checkUsersCount.call();
     console.log("Count = " + count);
@@ -10,7 +10,7 @@ contract("HelloEthSalon:GetMessage", function (accounts) {
   });
 
   it("should return right price after registered", async function () {
-    const contract = await HelloEthSalon.deployed();
+    const contract = await Copyright.deployed();
 
     let song = "hello world";
     let price = 0;
@@ -22,7 +22,7 @@ contract("HelloEthSalon:GetMessage", function (accounts) {
   });
 
   it("should return 0 for registered songs", async function () {
-    const contract = await HelloEthSalon.deployed();
+    const contract = await Copyright.deployed();
 
     let result = await contract.checkSongPrice.call("not registered fake song hehehe");
     console.log(result);
