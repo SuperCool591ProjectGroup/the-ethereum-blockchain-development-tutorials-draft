@@ -1,5 +1,6 @@
-progma solidity 0.4.20
+pragma solidity ^0.4.4;
 
+/*
 contract Copyright {
 	string[] public songs;
 	address[] public users;
@@ -61,5 +62,4 @@ contract Copyright {
 	function getSongs() constant returns (string[]) {
 		return songs;
 	}
-}
-
+} */

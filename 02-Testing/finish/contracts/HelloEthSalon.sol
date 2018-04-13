@@ -13,16 +13,16 @@ contract HelloEthSalon {
     uint share;
   }
 
-  // function userRegister() returns (address[]){
-  function userRegister() public returns (uint){
+  function userRegister() public {
     users.push(msg.sender);
-    // return msg.sender;//"user registered";
+  }
+
+  function checkUsersCount() public returns (uint) {
     return users.length;
-    // return users;
   }
 
   function registerCopyright(string song, uint price) public returns (string) {
-    // require(checkUserExists(msg.sender));
+    require(checkUserExists(msg.sender));
     songs.push(song);
     priceInfo[song] = price;
     holderInfo[song].add = msg.sender;
@@ -38,9 +38,5 @@ contract HelloEthSalon {
         return true;
     }
     return false;
-  }
-
-  function checkUsersCount() public returns(uint) {
-    return users.length;
   }
 }
