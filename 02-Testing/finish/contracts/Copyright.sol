@@ -17,8 +17,8 @@ contract Copyright {
     users.push(msg.sender);
   }
 
-  function checkUsersCount() public constant returns (uint) {
-    return users.length;
+  function checkUsers() public constant returns (address[]) {
+  	return users;
   }
 
   function registerCopyright(string song, uint price) public {
@@ -39,5 +39,20 @@ contract Copyright {
 
   function checkSongPrice(string song) public constant returns (uint) {
     return priceInfo[song];
+  }
+
+  function buyLicense(string song) public payable {
+  	require(checkUserExists(msg.sender));
+  	uint price = priceInfo[song];
+  	// Check that the amount paid is >= the price
+  	// the ether is paid to the smart contract first through payable function
+  	assert(msg.value >= price);
+  	authorization[song].push(msg.sender);
+  	// pay the coopyright holder
+  	payRoyalty(song, msg.value);
+  }
+
+  function payRoyalty(string song, uint amount) {
+  	holderInfo[song].add.transfer(amount);
   }
 }
