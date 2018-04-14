@@ -1,59 +1,100 @@
 pragma solidity ^0.4.4;
 
 contract Copyright {
-  string[] public songs;
-  address[] public users;
+  Song[] public songs;
+  // address[] public users;
   // assume one song only has one copyright holder for now
-  mapping(string => ShareHolder) holderInfo;
-  mapping(string => uint) priceInfo;
-  mapping(string => address[]) authorization;
+  mapping(uint => Song) songInfo;
+  mapping(address => UserStatus) userInfo;
+  // mapping(uint => uint) priceInfo;
+  // mapping(uint => address[]) authorization;
+  // mapping(address => Song[]) purchasedSongs;
+  // mapping(address => Song[]) uploadedSongs;
 
   struct ShareHolder {
     address add;
-    uint share;
+    float share;
   }
 
+  struct UserStatus {
+    bool registered;
+    uint[] purchasedSongs;
+    uint[] uploadedSongs;
+  }
+
+  struct Song {
+    uint ID;
+    string name;
+    ShareHolder[] shareHolders;
+    uint price;
+    address[] licenseHolders;
+  }
+
+  //TODO: check duplicate
   function userRegister() public {
-    users.push(msg.sender);
+    // users.push(msg.sender);
+    userInfo[msg.sender].registered = true;
   }
 
-  function checkUsers() public constant returns (address[]) {
-  	return users;
-  }
+  // function checkUsers() public constant returns (address[]) {
+  // 	return users;
+  // }
 
-  function registerCopyright(string song, uint price) public {
+  function registerCopyright(string name, uint price, address[] holders, uint[] shares) public {
     require(checkUserExists(msg.sender));
-    songs.push(song);
-    priceInfo[song] = price;
-    holderInfo[song].add = msg.sender;
-    holderInfo[song].share = 1;
+    require(shares.length == holders.length);
+    require(checkShareSum(shares));
+    // songs.push(song);
+    // priceInfo[song] = price;
+    // holderInfo[song].add = msg.sender;
+    // holderInfo[song].share = 1;
+    for(uint i = 0; i < shares.length; i++) {
+      songInfo[shareHolders][i].add = holders[i];
+      songInfo[shareHolders][i].share = shares[i];
+    }
+
+  }
+
+  function checkShareSum(uint[] list) public constant returns (bool) {
+    uint sum = 0;
+    for(uint i = 0; i < list.length; i++) {
+      sum += list[i];
+    }
+    return sum == 100;
+
   }
 
   function checkUserExists(address user) public constant returns (bool) {
-    for(uint i = 0; i < users.length; i++) {
-      if(users[i] == user)
-        return true;
-    }
-    return false;
+    return userInfo[user].registered;
   }
 
-  function checkSongPrice(string song) public constant returns (uint) {
-    return priceInfo[song];
+  function checkSongPrice(uint songID) public constant returns (uint) {
+    return songInfo[songID].price;
   }
 
-  function buyLicense(string song) public payable {
+  function buyLicense(uint songID) public payable {
   	require(checkUserExists(msg.sender));
-  	uint price = priceInfo[song];
+  	uint price = songInfo[songID].price;
   	// Check that the amount paid is >= the price
   	// the ether is paid to the smart contract first through payable function
   	assert(msg.value >= price);
-  	authorization[song].push(msg.sender);
+  	// authorization[song].push(msg.sender);
   	// pay the coopyright holder
+    userInfo[msg.sender].purchasedSongs.push(songID);
+    songInfo[songID].licenseHolders.push(msg.sender);
   	payRoyalty(song, msg.value);
   }
 
-  function payRoyalty(string song, uint amount) {
-  	holderInfo[song].add.transfer(amount);
+  // function getLicenseInfo
+
+  function payRoyalty(uint songID, uint amount) {
+    ShareHolder[] holders = songInfo[songID].shareHolders;
+    for(int i = 0; i < holders.length; i++) {
+      ShareHolder holder = holders[i];
+      holder.add.transfer(amount * holder.share / 100);
+
+    }
+  	// holderInfo[song].add.transfer(amount);
   }
 
   function getMyBalance() public constant returns (uint) {
