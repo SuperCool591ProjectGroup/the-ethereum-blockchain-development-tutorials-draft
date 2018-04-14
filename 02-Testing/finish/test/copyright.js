@@ -4,20 +4,27 @@ contract("Copyright!", function (accounts) {
   it("should return one right after you register", async function() {
     let c = await Copyright.deployed();
     await c.userRegister();
-    let count = await c.checkUsersCount.call();
-    console.log("Count = " + count);
-    assert.equal(count, 1);
+    // let count = await c.checkUsersCount.call();
+    // console.log("Count = " + count);
+    let amIRegistered = await c.amIRegistered.call();
+    assert.equal(amIRegistered, true);
   });
 
   it("should return right price after registered", async function () {
     const contract = await Copyright.deployed();
 
-    let song = "hello world";
-    let price = 0;
-    await contract.registerCopyright(song, price);
+    let songName = "hello world";
+    let price = 1000;
 
-    let result = await contract.checkSongPrice.call(song);
-    console.log(result);
+    // function registerCopyright(string name, uint price, address[] holders, uint[] shares) public {
+    let holders = [accounts[0], accounts[1], accounts[2]];
+    let shares = [50, 30, 20];
+    let hash = await contract.songHash.call(songName, price, holders, shares);
+    // console.log(hash);
+    await contract.registerCopyright(hash, songName, price, holders, shares);
+
+    let result = await contract.checkSongPrice.call(hash);
+    console.log("the price get: " + result);
     assert.equal(price, result);
   });
 
