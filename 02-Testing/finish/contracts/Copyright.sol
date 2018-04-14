@@ -12,8 +12,8 @@ contract Copyright {
   // mapping(address => Song[]) uploadedSongs;
 
   struct ShareHolder {
-    address add;
-    float share;
+    address addr;
+    uint share;
   }
 
   struct UserStatus {
@@ -36,10 +36,6 @@ contract Copyright {
     userInfo[msg.sender].registered = true;
   }
 
-  // function checkUsers() public constant returns (address[]) {
-  // 	return users;
-  // }
-
   function registerCopyright(string name, uint price, address[] holders, uint[] shares) public {
     require(checkUserExists(msg.sender));
     require(shares.length == holders.length);
@@ -48,11 +44,15 @@ contract Copyright {
     // priceInfo[song] = price;
     // holderInfo[song].add = msg.sender;
     // holderInfo[song].share = 1;
+    uint songID = 1;
+    // TODO: check if ID is unique
+    songInfo[songID].price = price;
     for(uint i = 0; i < shares.length; i++) {
-      songInfo[shareHolders][i].add = holders[i];
-      songInfo[shareHolders][i].share = shares[i];
+      songInfo[songID].shareHolders[i].addr = holders[i];
+      songInfo[songID].shareHolders[i].share = shares[i];
     }
-
+    // TODO: Check if song already exists in the array
+    songs.push(songInfo[songID]);
   }
 
   function checkShareSum(uint[] list) public constant returns (bool) {
@@ -61,7 +61,6 @@ contract Copyright {
       sum += list[i];
     }
     return sum == 100;
-
   }
 
   function checkUserExists(address user) public constant returns (bool) {
@@ -77,22 +76,19 @@ contract Copyright {
   	uint price = songInfo[songID].price;
   	// Check that the amount paid is >= the price
   	// the ether is paid to the smart contract first through payable function
-  	assert(msg.value >= price);
+  	require(msg.value >= price);
   	// authorization[song].push(msg.sender);
   	// pay the coopyright holder
     userInfo[msg.sender].purchasedSongs.push(songID);
     songInfo[songID].licenseHolders.push(msg.sender);
-  	payRoyalty(song, msg.value);
+  	payRoyalty(songID, msg.value);
   }
 
-  // function getLicenseInfo
-
-  function payRoyalty(uint songID, uint amount) {
+  function payRoyalty(uint songID, uint amount) private {
     ShareHolder[] holders = songInfo[songID].shareHolders;
     for(int i = 0; i < holders.length; i++) {
       ShareHolder holder = holders[i];
-      holder.add.transfer(amount * holder.share / 100);
-
+      holder.addr.transfer(amount * holder.share / 100);
     }
   	// holderInfo[song].add.transfer(amount);
   }
