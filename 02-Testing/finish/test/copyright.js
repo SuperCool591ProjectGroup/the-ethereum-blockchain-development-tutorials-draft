@@ -19,9 +19,16 @@ contract("Copyright!", function (accounts) {
     // function registerCopyright(string name, uint price, address[] holders, uint[] shares) public {
     let holders = [accounts[0], accounts[1], accounts[2]];
     let shares = [50, 30, 20];
-    let hash = await contract.songHash.call(songName, price, holders, shares);
-    // console.log(hash);
-    await contract.registerCopyright(hash, songName, price, holders, shares);
+    // let hash = await contract.songHash.call(songName, price, holders, shares);
+    // // console.log(hash);
+    let status = await contract.registerCopyright(songName, price, holders, shares);
+    let hash;
+    for (let e of status.logs) {
+      if (e.event == "registerEvent") {
+        hash = e.args.param
+        console.log("Hash: " + hash);
+      }
+    }
 
     let result = await contract.checkSongPrice.call(hash);
     console.log("the price get: " + result);

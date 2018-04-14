@@ -11,6 +11,8 @@ contract Copyright {
   // mapping(address => Song[]) purchasedSongs;
   // mapping(address => Song[]) uploadedSongs;
 
+  event registerEvent(bytes32 param);
+
   struct ShareHolder {
     address addr;
     uint share;
@@ -36,11 +38,11 @@ contract Copyright {
     userInfo[msg.sender].registered = true;
   }
 
-  function songHash(string name, uint price, address[] holders, uint[] shares) public returns (bytes32) {
+  /* function songHash(string name, uint price, address[] holders, uint[] shares) public returns (bytes32) {
     return keccak256(name, price, holders);
-  }
+  } */
 
-  function registerCopyright(bytes32 songID, string name, uint price, address[] holders, uint[] shares) public {
+  function registerCopyright(string name, uint price, address[] holders, uint[] shares) public {
     require(checkUserExists(msg.sender));
     require(shares.length == holders.length);
     require(checkShareSum(shares));
@@ -48,7 +50,7 @@ contract Copyright {
     // priceInfo[song] = price;
     // holderInfo[song].add = msg.sender;
     // holderInfo[song].share = 1;
-    /* bytes32 songID = keccak256(name, price, holders); */
+    bytes32 songID = keccak256(name, price, holders);
     // TODO: check if ID is unique
     songInfo[songID].name = name;
     songInfo[songID].price = price;
@@ -57,6 +59,9 @@ contract Copyright {
       ShareHolder memory holder = ShareHolder({ addr: holders[i], share: shares[i]});
       songInfo[songID].shareHolders.push(holder);
     }
+    // if it was successful
+    emit registerEvent(songID);
+
     // TODO: Check if song already exists in the array
     songs.push(songInfo[songID]);
   }
